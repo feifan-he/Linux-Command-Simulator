@@ -2,6 +2,7 @@ package edu.brandeis.cs.cs131.pa1.filter.sequential;
 
 import edu.brandeis.cs.cs131.pa1.filter.Message;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -36,9 +37,24 @@ public class SequentialREPL {
             } else {
                 try {
                     List<SequentialFilter> filtersList = SequentialCommandBuilder.createFiltersFromCommand(cmd);
+                    List<Thread> threads = new ArrayList<>();
                     // process each filter
-                    for (int i = 0; i < filtersList.size(); i++)
-                        filtersList.get(i).process();
+                    for (SequentialFilter filter : filtersList) {
+                        Thread t = new Thread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                filter.process();
+                            }
+                        });
+                        t.start();
+                        threads.add(t);
+                    }
+
+                    for(Thread t : threads) {
+                        t.join();
+                    }
+
                 } catch (Exception e) {
                     System.out.print(e.getMessage());
                 }

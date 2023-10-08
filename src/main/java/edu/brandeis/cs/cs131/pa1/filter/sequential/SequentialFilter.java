@@ -46,13 +46,15 @@ public abstract class SequentialFilter extends Filter {
 	 * Processes the input pipe and passes the result to the output pipe
 	 */
 	public void process() {
-		while (!input.isEmpty()) {
-			String line = input.read();
+		String line;
+		while ((line = input.read()) != null) {
 			String processedLine = processLine(line);
 			if (processedLine != null) {
 				output.write(processedLine);
 			}
 		}
+		if (output != null)
+			output.write(null);
 	}
 
 	/**

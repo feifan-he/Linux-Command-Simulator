@@ -20,6 +20,7 @@ public class ListFilter extends SequentialFilter {
             for (File fileOrFolder : filesAndFolders) {
                 this.output.write(fileOrFolder.getName());
             }
+        this.output.write(null);
     }
 
     /**

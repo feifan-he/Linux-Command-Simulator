@@ -30,6 +30,7 @@ public class CatFilter extends SequentialFilter {
     public void process() {
         while (scanner.hasNextLine())
             output.write(scanner.nextLine());
+        output.write(null);
     }
 
     /**

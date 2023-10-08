@@ -43,6 +43,7 @@ public class ChangeDirectoryFilter extends SequentialFilter {
     @Override
     public void process() {
         CurrentWorkingDirectory.setTo(newPath);
+        output.write(null);
     }
 
     /**

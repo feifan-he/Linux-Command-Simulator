@@ -10,9 +10,11 @@ public class HeadFilter extends SequentialFilter {
      */
     @Override
     public void process() {
-        for (int i = 0; i < 10 && !input.isEmpty(); i++) {
-            output.write(input.read());
+        String s;
+        for (int i = 0; i < 10 && (s = input.read()) != null; i++) {
+            output.write(s);
         }
+        output.write(null);
     }
 
     /**

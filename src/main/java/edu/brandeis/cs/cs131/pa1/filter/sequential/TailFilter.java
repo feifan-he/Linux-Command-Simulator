@@ -1,5 +1,8 @@
 package edu.brandeis.cs.cs131.pa1.filter.sequential;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * TailFilter is used to support tail command.
  * Returns up to the last 10 lines from piped input.
@@ -10,12 +13,18 @@ public class TailFilter extends SequentialFilter {
      */
     @Override
     public void process() {
-        while (input.size() > 10) {
-            input.read();
+        Queue<String> tail = new LinkedList<>();
+        String s;
+        while ((s = input.read()) != null) {
+            tail.add(s);
+            if (tail.size() > 10) {
+                tail.remove();
+            }
         }
-        while (!input.isEmpty()) {
-            output.write(input.read());
+        for (String tailS : tail) {
+            output.write(tailS);
         }
+        output.write(null);
     }
 
     /**

@@ -10,15 +10,13 @@ public class UniqFilter extends SequentialFilter {
      */
     @Override
     public void process() {
-        String prev = null;
-        while (!input.isEmpty()) {
-            String line = input.read();
-            if (prev != null && prev.equals(line)) {
-                continue;
-            }
-            prev = line;
-            output.write(line);
+        String prev = null, s;
+        while ((s = input.read()) != null) {
+            if (!s.equals(prev))
+                output.write(s);
+            prev = s;
         }
+        output.write(null);
     }
 
     /**

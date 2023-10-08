@@ -13,6 +13,7 @@ public class WorkingDirectoryFilter extends SequentialFilter {
     @Override
     public void process() {
         this.output.write(CurrentWorkingDirectory.get());
+        this.output.write(null);
     }
 
     /**

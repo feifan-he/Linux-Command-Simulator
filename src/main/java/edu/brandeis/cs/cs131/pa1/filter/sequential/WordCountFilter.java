@@ -22,14 +22,15 @@ public class WordCountFilter extends SequentialFilter {
      */
     @Override
     public void process() {
-        while (!input.isEmpty()) {
+        String line;
+        while ((line = input.read()) != null) {
             numLines++;
-            String line = input.read();
             numChars += line.length();
             if (!line.isEmpty())
                 numWords += line.split(" ").length;
         }
         output.write(numLines + " " + numWords + " " + numChars);
+        output.write(null);
     }
 
     /**

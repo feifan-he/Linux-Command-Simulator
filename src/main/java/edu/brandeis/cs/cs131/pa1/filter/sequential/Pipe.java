@@ -2,6 +2,8 @@ package edu.brandeis.cs.cs131.pa1.filter.sequential;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * This class is used by filters to write output and read input.
@@ -12,10 +14,19 @@ import java.util.Queue;
  */
 public class Pipe {
 
-    private final Queue<String> buffer;
+    public class PipeItem {
+        private final String data;
+
+        public PipeItem(String data) {
+            this.data = data;
+        }
+    }
+
+    BlockingQueue<PipeItem> buffer;
+
 
     public Pipe() {
-        buffer = new LinkedList<String>();
+        buffer = new LinkedBlockingQueue<>();
     }
 
     /**
@@ -24,7 +35,11 @@ public class Pipe {
      * @return the element at the front of the pipe
      */
     public String read() {
-        return buffer.poll();
+        try {
+            return buffer.take().data;
+        } catch (InterruptedException e) {
+        }
+        return null;
     }
 
     /**
@@ -33,21 +48,10 @@ public class Pipe {
      * @param data to be added to the pipe
      */
     public void write(String data) {
-        buffer.add(data);
-    }
-
-    /**
-     * {@return number of elements in the pipe}
-     */
-    public int size() {
-        return buffer.size();
-    }
-
-    /**
-     * {@return a boolean indicating whether or not the pipe is empty}
-     */
-    public boolean isEmpty() {
-        return buffer.isEmpty();
+        try {
+            buffer.put(new PipeItem(data));
+        } catch (InterruptedException e) {
+        }
     }
 
 }
