@@ -2,7 +2,7 @@ Example usage:
 ```
 Welcome to the Unix-ish command line.
 
-> ls
+$ ls
 pa1.iml
 .DS_Store
 target
@@ -12,17 +12,17 @@ pom.xml
 .idea
 src
 
-> ls > dirs.txt
+$ ls > dirs.txt
 
-> cat dirs.txt | wc
+$ cat dirs.txt | wc
 9 9 59
 
-> cat dirs.txt | grep . | grep git > gitfiles.txt
+$ cat dirs.txt | grep . | grep git > gitfiles.txt
 
-> cat gitfiles.txt
+$ cat gitfiles.txt
 .gitignore
 .git
 
-> pwd
+$ pwd
 /Users/feifan/Desktop/Shell-Simulator
 ```
